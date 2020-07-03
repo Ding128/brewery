@@ -24,12 +24,11 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity handlePost(@PathVariable("customerId") UUID customerId,
-                                      @RequestBody CustomerDto customerDto) {
+    @PostMapping
+    public ResponseEntity handlePost(@RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.save(customerDto);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("locations", "/api/v1/customer" + savedDto.getId().toString());
+        headers.add("locations", "/api/v1/customer/" + savedDto.getId().toString());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
